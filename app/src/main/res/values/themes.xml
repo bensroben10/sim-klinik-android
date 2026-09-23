@@ -1,16 +1,11 @@
 <resources>
-    <style name="Theme.SimKlinik" parent="Theme.SplashScreen">
-        <item name="windowSplashScreenBackground">@color/splash_background</item>
-        <item name="windowSplashScreenAnimatedIcon">@drawable/ic_clinic</item>
-        <item name="postSplashScreenTheme">@style/Theme.SimKlinik.Main</item>
-    </style>
-
-    <style name="Theme.SimKlinik.Main" parent="android:style/Theme.Material.Light.NoActionBar">
+    <style name="Theme.SimKlinik" parent="android:style/Theme.Material.Light.NoActionBar">
         <item name="android:fontFamily">sans</item>
         <item name="android:windowActionModeOverlay">true</item>
         <item name="android:colorAccent">#1565C0</item>
         <item name="android:navigationBarColor">#FFFFFF</item>
         <item name="android:statusBarColor">#FFFFFF</item>
         <item name="android:windowLightStatusBar">true</item>
+        <item name="android:windowBackground">#FFFFFF</item>
     </style>
 </resources>

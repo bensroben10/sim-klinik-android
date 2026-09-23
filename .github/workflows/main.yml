@@ -28,8 +28,11 @@ jobs:
       - name: Build APK
         run: gradle :app:assembleDebug
 
+      - name: Rename APK
+        run: cp app/build/outputs/apk/debug/app-debug.apk SIM-KLINIK-MANDIRI-v1.0.apk
+
       - name: Upload APK
         uses: actions/upload-artifact@v4
         with:
-          name: SIM-KLINIK-APK
-          path: app/build/outputs/apk/debug/app-debug.apk
+          name: SIM-KLINIK-MANDIRI-v1.0
+          path: SIM-KLINIK-MANDIRI-v1.0.apk

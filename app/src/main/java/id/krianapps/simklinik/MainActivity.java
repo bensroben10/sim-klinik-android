@@ -1,11 +1,10 @@
 package id.krianapps.simklinik;
 
 import android.annotation.SuppressLint;
+import android.app.Activity;
 import android.content.Intent;
-import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Bundle;
-import android.view.View;
 import android.webkit.CookieManager;
 import android.webkit.WebChromeClient;
 import android.webkit.WebResourceRequest;
@@ -14,11 +13,7 @@ import android.webkit.WebView;
 import android.webkit.WebViewClient;
 import android.widget.Toast;
 
-import androidx.activity.OnBackPressedCallback;
-import androidx.activity.ComponentActivity;
-import androidx.core.splashscreen.SplashScreen;
-
-public class MainActivity extends ComponentActivity {
+public class MainActivity extends Activity {
 
     private static final String APP_URL = "https://sim-klinik.krianapps.biz.id/";
     private static final String APP_HOST = "sim-klinik.krianapps.biz.id";
@@ -27,25 +22,12 @@ public class MainActivity extends ComponentActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        SplashScreen.installSplashScreen(this);
         super.onCreate(savedInstanceState);
-
         setContentView(R.layout.activity_main);
 
         webView = findViewById(R.id.webview);
         configureWebView();
         webView.loadUrl(APP_URL);
-
-        getOnBackPressedDispatcher().addCallback(this, new OnBackPressedCallback(true) {
-            @Override
-            public void handleOnBackPressed() {
-                if (webView.canGoBack()) {
-                    webView.goBack();
-                } else {
-                    finish();
-                }
-            }
-        });
     }
 
     @SuppressLint("SetJavaScriptEnabled")
@@ -72,17 +54,20 @@ public class MainActivity extends ComponentActivity {
             @Override
             public boolean shouldOverrideUrlLoading(WebView view, WebResourceRequest request) {
                 Uri uri = request.getUrl();
+
                 if (APP_HOST.equalsIgnoreCase(uri.getHost())) {
                     return false;
                 }
+
                 try {
                     startActivity(new Intent(Intent.ACTION_VIEW, uri));
-                } catch (Exception ignored) {}
+                } catch (Exception ignored) {
+                }
                 return true;
             }
 
             @Override
-            public void onReceivedError(WebView view, android.webkit.WebResourceRequest request,
+            public void onReceivedError(WebView view, WebResourceRequest request,
                                         android.webkit.WebResourceError error) {
                 if (request.isForMainFrame()) {
                     Toast.makeText(MainActivity.this,
@@ -91,6 +76,15 @@ public class MainActivity extends ComponentActivity {
                 }
             }
         });
+    }
+
+    @Override
+    public void onBackPressed() {
+        if (webView != null && webView.canGoBack()) {
+            webView.goBack();
+        } else {
+            super.onBackPressed();
+        }
     }
 
     @Override
